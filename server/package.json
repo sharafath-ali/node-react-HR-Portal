@@ -17,5 +17,8 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^18.15.11"
+  }
 }
