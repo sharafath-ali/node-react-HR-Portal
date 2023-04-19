@@ -72,29 +72,27 @@ const addEmployees = async (req: Request, res: Response) => {
     console.log("start.");
     console.log(req.body, "req body log");
     const newUser = {
-      Id: req.body.Id,
-      Name: req.body.first_name,
+      firstname: req.body.first_name,
+      lastname: req.body.last_name,
       email: req.body.email,
-      //gender: req.body.gender,
-      designation: req.body.designation,
-      //department: req.body.department,
-      //city: req.body.city,
-      //dob: req.body.dob,
+      designation: req.body.designation
+      //Id: req.body.Id,
     };
 
     console.log("new user log", newUser);
     const response = await sp.web.lists.getByTitle("users").items.add({
-      Name: newUser.Name,
-      email: newUser.email,
-      // gender: newUser.gender,
+      first_name: newUser.firstname,
+      last_name:newUser.lastname,
+      email:newUser.email,
       designation: newUser.designation,
-    }); //console.log(response)
+    }); 
 
     console.log(response.data.Id);
     console.log("logging response", response);
+
     const folderId = response.data.Id;
     const newFolderName = `${folderId}`;
-    const documentLibraryName = `EmployeLibrary`;
+    const documentLibraryName = `EmployeeLibrary`;
     const documentLibrary = sp.web.lists.getByTitle(documentLibraryName);
     await documentLibrary.rootFolder.folders
       .addUsingPath(newFolderName)
