@@ -1,0 +1,51 @@
+.container {
+    padding: 30px;
+}
+
+button:hover,
+a:hover {
+    opacity: 0.7;
+}
+
+.MainNavbar {
+    padding: 30px 50px !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    background-color: transparent !important;
+}
+
+.NavLogo {
+    height: 4vw !important;
+}
+
+.container {
+    padding: 30px;
+}
+
+button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+button:hover,
+a:hover {
+    opacity: 0.7;
+}
+
+.tet1,
+.email1 {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
