@@ -1,51 +1,66 @@
-.container {
-  padding: 30px;
-}
-
-button:hover,
-a:hover {
-  opacity: 0.7;
-}
-
-.MainNavbar {
-  padding: 30px 50px !important;
-  display: flex !important;
-  justify-content: space-around !important;
-  background-color: transparent !important;
-}
-
-.NavLogo {
-  height: 4vw !important;
-}
-
-.container {
-  padding: 30px;
-}
-
-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
+.left-full-image-container {
+  margin-left: 7%;
   width: 100%;
-  font-size: 18px;
+  height: 100vh;
+  margin-right: 4%;
 }
 
-button:hover,
-a:hover {
-  opacity: 0.7;
+.left-image {
+  width: 80%;
+  height: 80%;
+  border-radius: 30px;
 }
 
-.tet1,
-.email1 {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+.content-container-fluid {
+
+  padding: 50px;
+}
+
+.left-half,
+.right-half {
+  height: 100%;
+}
+
+.left-half {
+  height: auto;
+
+  padding-right: 50px;
+}
+
+.right-half {
+
+  padding: 0 50px;
+}
+
+.left-half img {
+  height: 100%;
+  width: auto;
+}
+
+.form-head-text {
+  font-weight: 600;
+  font-size: xx-large;
+  text-align: left;
+}
+
+.aligh-right {
+  float: right;
+}
+
+
+.input-detail {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+}
+
+body {
+  background-color: white;
 }

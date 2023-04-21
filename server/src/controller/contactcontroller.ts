@@ -68,42 +68,38 @@ const deleteEmployee = async (req: Request, res: Response) => {
 
 //function for addemployee= not done
 const addEmployees = async (req: Request, res: Response) => {
-  try {
+  const {first_name,last_name,email,designation} = req.body;
+  
     console.log("start.");
     console.log(req.body, "req body log");
-    const newUser = {
-      firstname: req.body.first_name,
-      lastname: req.body.last_name,
-      email: req.body.email,
-      designation: req.body.designation
-      //Id: req.body.Id,
+    const newUser= {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      designation:designation
     };
 
     console.log("new user log", newUser);
-    const response = await sp.web.lists.getByTitle("users").items.add({
-      first_name: newUser.firstname,
-      last_name:newUser.lastname,
-      email:newUser.email,
-      designation: newUser.designation,
-    }); 
-
+    const response = await sp.web.lists.getByTitle("users").items.add(newUser); 
     console.log(response.data.Id);
     console.log("logging response", response);
 
-    const folderId = response.data.Id;
-    const newFolderName = `${folderId}`;
-    const documentLibraryName = `EmployeeLibrary`;
+    const documentLibraryName = "EmployeeLibrary";
+    const folderName = response.data.Id;
+    const newFolderName = `${folderName}`;
     const documentLibrary = sp.web.lists.getByTitle(documentLibraryName);
-    await documentLibrary.rootFolder.folders
-      .addUsingPath(newFolderName)
+    await documentLibrary.rootFolder.folders.addUsingPath(newFolderName)
       .then(() => {
         console.log(`Folder ${newFolderName} created successfully.`);
-      });
-    return res.send(response);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
+      })
+    .catch((error:any)=> {
+    console.log(`Error creating folder: ${error}`);
+  });
+  res.status(200).json({
+    success: true,
+    message: "New Employee added succesfuly",
+    response,
+  });
 };
 
 export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees };
