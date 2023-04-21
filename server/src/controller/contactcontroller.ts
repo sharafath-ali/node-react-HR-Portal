@@ -66,7 +66,7 @@ const deleteEmployee = async (req: Request, res: Response) => {
   }
 };
 
-//function for addemployee= not done
+//function for addemployee= done
 const addEmployees = async (req: Request, res: Response) => {
   const {first_name,last_name,email,designation} = req.body;
   
@@ -102,4 +102,53 @@ const addEmployees = async (req: Request, res: Response) => {
   });
 };
 
-export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees };
+
+
+
+//function for Update= done
+
+
+
+
+const Update=async (req: Request, res: Response) => {
+  let id: number = Number.parseInt(req.params.id);
+
+  const {first_name,last_name,email,designation} = req.body;
+
+  
+
+  try {
+    if (isNaN(id)) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid ID provided",
+      });
+
+      return;
+    }
+
+    const updateEmploy = {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      designation:designation
+    };
+
+    const response= await sp.web.lists.getByTitle("users").items.getById(id).update(updateEmploy);
+    console.log(response)
+
+    res.status(200).json({
+      success: true,
+      message: " Succesfully Updated Employee Details",
+      response,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({ error: "Internal server error " });
+  }
+};
+
+
+
+export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update};

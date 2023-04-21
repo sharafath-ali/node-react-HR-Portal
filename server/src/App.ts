@@ -5,6 +5,7 @@ import { sp } from "@pnp/sp-commonjs";
 import { SPFetchClient } from "@pnp/nodejs-commonjs";
 import contactroute from "./routes/contactroute";
 import cors from "cors";
+import morgan from 'morgan';
 const app: Application = express();
 const port: number = 5000;
 {
@@ -31,6 +32,7 @@ SpfxConnection();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(morgan('tiny'));
 
 app.use("/get", contactroute);
 

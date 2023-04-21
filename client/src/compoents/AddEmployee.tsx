@@ -67,7 +67,7 @@ export default function App (props: IAppProps) {
             <img src={img1} alt="Image" className="img-fluid left-image" />
           </div>
           <div className="col-md-6 right-half ">
-            <h1 className="form-head-text">New Employee</h1>
+            <h1 className="form-head-text text-center">New Employee</h1>
             <form>
 
               <div className="form-group">
@@ -112,20 +112,10 @@ export default function App (props: IAppProps) {
                 />
               </div>
               
-              <div className="form-group">
-                <input
-                  type="email"
-                  className="form-control my-4"
-                  id="email"
-                  placeholder="Enter your email"
-                />
-              </div>
-
               <button type="submit" className="btn btn-primary  my-4 aligh-right" onClick={(e)=>{save(e)}}>
                 Submit
               </button>
             </form>
-            {first_name},{last_name},{designation},{email}
           </div>
         </div>
       </div>

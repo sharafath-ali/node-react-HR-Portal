@@ -15,14 +15,49 @@ export interface IEmployeeProfileProps {
 
 export default function EmployeeProfile (props: IEmployeeProfileProps) {
   const [data, setdata] = useState<any>();
-
+  const [edit, setEdit] = useState<boolean>(true);
+  const [email, setemail] = useState<string>("");
+  const [first_name, setfirst_name] = useState<string>("");
+  const [designation, setdesignation] = useState<string>("");
+  const [last_name, setlast_name] = useState<string>("");
+  const [Id,setId]=useState<number>()
   const navigate = useNavigate();
   let {id} = useParams();
-
+  
   function Documentview(){
     return navigate('/ViewDocuments')
   }
- 
+  function Update(){
+    setEdit(false)    
+  };
+  
+  //Save
+  async function Save(e:any){
+    e.preventDefault()
+    const updateEmploy = {
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      designation:designation
+    };
+
+    try {
+      const url = `http://localhost:5000/get/Update/${id}`;
+      await axios
+        .put(url, updateEmploy, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => console.log(response));
+      return window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+    navigate(`ViewProfile/${Id}`)
+  }
+  //save end
+
   async function Delete(){
       try {
         await axios.delete(`http://localhost:5000/get/employ/${id}`);
@@ -31,8 +66,6 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
         console.error("Error deleting while deleting:", error);
       }
     };
-  
-
   //fetching
   useEffect(() => {
     const GetDetails = async () => {
@@ -41,6 +74,11 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
           `http://localhost:5000/get/getbyid/${id}`
         );
         setdata(response.data);
+        setfirst_name(response.data.first_name)
+        setemail(response.data.email)
+        setdesignation(response.data.designation)
+        setlast_name(response.data.last_name)
+        setId(response.data.Id)
       } catch (error) {
         console.error(error);
       }
@@ -64,6 +102,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      {edit?(
       <div>
         <div className="container">
           <div className="row d-flex justify-content-center">
@@ -84,7 +123,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
                 <p className="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 <div className="d-flex justify-content-around mt-5">
                 <button className="button-icons color-pink" onClick={Delete}> <DeleteRoundedIcon className="icon"/> </button>
-                <button className="button-icons color-green"> <EditRoundedIcon className="icon"/> </button>
+                <button className="button-icons color-green" onClick={Update} > <EditRoundedIcon className="icon"/> </button>
                 <button className="button-icons color-blue" onClick={Documentview}> <FolderSharedRoundedIcon className="icon"/> </button>
                 </div>
                 </div>
@@ -94,6 +133,58 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
           </div>
         </div>
       </div>
+       ):(<div className="container">
+        <h1 className="form-head-text text-center m-5">Update Employee Details</h1>
+        <form>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control my-4"
+            id="name"
+            value={first_name}
+            placeholder="Enter FirstName"
+            onChange={(e) => setfirst_name(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control my-4"
+            id="email"
+            value={last_name}
+            placeholder="Enter LastName"
+            onChange={(e) => setlast_name(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="email"
+            className="form-control my-4"
+            id="email"
+            value={email}
+            placeholder="Enter Email"
+            onChange={(e) => setemail(e.target.value)}
+          />
+        </div>
+        
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control my-4"
+            value={designation}
+            id="email"
+            placeholder="Enter Designation"
+            onChange={(e) => setdesignation(e.target.value)}
+          />
+        </div>
+        
+
+        <button type="submit" className="btn btn-primary  my-4 aligh-right" onClick={(e)=>{Save(e)}}>
+          Submit
+        </button>
+      </form></div>)}
     </div>
   );
 }
