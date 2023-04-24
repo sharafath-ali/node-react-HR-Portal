@@ -82,7 +82,7 @@ export default function App (props: IAppProps) {
                 />
               </div>
 
-            
+              
 
               <div className="form-group">
                 <input
@@ -114,6 +114,16 @@ export default function App (props: IAppProps) {
                 />
               </div>
               
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control my-4"
+                  id="name"
+                  placeholder="Enter Skills"
+                  onChange={(e) => setfirst_name(e.target.value)}
+                />
+              </div>
+
               <button type="submit" className="btn btn-primary  my-4 aligh-right" onClick={(e)=>{save(e)}}>
                 Submit
               </button>

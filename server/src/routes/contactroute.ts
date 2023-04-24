@@ -6,7 +6,10 @@ import {
   deleteEmployee,
   addEmployees,
   Update,
-  uploadImage
+  uploadImage,
+  uploadDocument,
+  getFilesInDirectory,
+  //downloadFile
 } from "../controller/contactcontroller";
 
 const router = express.Router();
@@ -20,6 +23,14 @@ router.delete("/employ/:id", deleteEmployee);
 router.post("/add", addEmployees);
 
 router.put("/Update/:id",Update)
-router.put("/imageupload/:emplyeeId",uploadImage)
 
+router.put("/image/:id",uploadImage)
+
+router.put("/image/:id",uploadImage)
+
+router.put("/document/:id", uploadDocument);
+
+router.get("/files/:id", getFilesInDirectory);
+
+//router.get("/document/download", downloadFile);
 export default router;

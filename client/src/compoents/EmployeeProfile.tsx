@@ -10,6 +10,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import FolderSharedRoundedIcon from '@mui/icons-material/FolderSharedRounded';
 import { Link, useParams ,useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "../LoaderComponent/loader";
 export interface IEmployeeProfileProps {
 }
 
@@ -22,6 +23,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
   const [last_name, setlast_name] = useState<string>("");
   const [Id,setId]=useState<number>()
   const navigate = useNavigate();
+  const [loading,setloading]=useState<any>(true);//loader
   let {id} = useParams();
   
   function Documentview(){
@@ -79,6 +81,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
         setdesignation(response.data.designation)
         setlast_name(response.data.last_name)
         setId(response.data.Id)
+        setloading(false)
       } catch (error) {
         console.error(error);
       }
@@ -104,6 +107,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
       </Navbar>
       {edit?(
       <div>
+         {loading?(<Loader/>):(
         <div className="container">
           <div className="row d-flex justify-content-center">
             <div className="col-md-8 col-sm-12 col-lg-6 ">
@@ -120,7 +124,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
                 <h6>({data?.designation})</h6>
                 <h6>{data?.email}</h6>
                 <div className="content ">
-                <p className="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p className="mt-4">Skills:React.js JavaScript Redux or other state management libraries React Router UI/UX design principles Testing with Jest and Enzyme Web development tools (e.g., Git, npm, yarn, Webpack) Performance optimization Problem-solving Collaboration and teamwork Continuous learning mindset</p>
                 <div className="d-flex justify-content-around mt-5">
                 <button className="button-icons color-pink" onClick={Delete}> <DeleteRoundedIcon className="icon"/> </button>
                 <button className="button-icons color-green" onClick={Update} > <EditRoundedIcon className="icon"/> </button>
@@ -131,7 +135,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
               {/* end profile details */}
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
        ):(<div className="container">
         <h1 className="form-head-text text-center m-5">Update Employee Details</h1>

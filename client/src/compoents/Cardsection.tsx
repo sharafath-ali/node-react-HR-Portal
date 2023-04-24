@@ -25,6 +25,7 @@ export default function Cardsection(props: ICardsectionProps) {
       await axios.get(url, { headers }).then((response) => {
         setUser(response.data);
       });
+      setloading(false);
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +40,7 @@ export default function Cardsection(props: ICardsectionProps) {
 
   useEffect(() => {
     setTimeout(() => {
-      setloading(false);
+      
     }, 5000);
   }, []);
 

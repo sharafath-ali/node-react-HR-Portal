@@ -150,16 +150,16 @@ const Update=async (req: Request, res: Response) => {
 };
 
 
-//Upload Not Done
+//Upload  Done
 const uploadImage= async (req: Request, res: Response) =>  {
-  const { emplyeeId } = req.params;
-  let selectedFile = (req?.files as any)?.image;
 
-  console.log("imagetype",selectedFile)
+  let image = (req?.files as any)?.image;
 
-  const id = Number(emplyeeId);
+  console.log("req?.files=>",req?.files)
+ 
+  const id:number= Number.parseInt(req.params.id);
  /////////////////////////////////////////////////////////////////
-  if (!selectedFile) {
+  if (!image) {
     console.error('No file selected');
     return res.status(400).json({
       success: false,
@@ -167,25 +167,25 @@ const uploadImage= async (req: Request, res: Response) =>  {
     });
   }
 
-  const documentLibraryName = `EmployeeLibrary/${emplyeeId}`;
+  const documentLibraryName = `EmployeeLibrary/${id}`;
   const fileNamePath = `profilepic.jpg`;
 
   let result: any;
-  if (selectedFile?.size <= 10485760) {
+  if (image?.size <= 10485760) {
     // small upload
     console.log('Starting small file upload');
-    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addUsingPath(fileNamePath, selectedFile.data, { Overwrite: true });
+    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addUsingPath(fileNamePath, image.data, { Overwrite: true });
   } else {
     // large upload
     console.log('Starting large file upload');
-    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addChunked(fileNamePath, selectedFile, data => {
+    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addChunked(fileNamePath, image, ()=> {
       console.log(`progress`);
     }, true);
   }
 
   console.log('Server relative URL:', result?.data?.ServerRelativeUrl);
-  const url = ` https://2mxff3.sharepoint.com/sites/SharafathAli/EmployeeLibrary/${emplyeeId}/profilepic.jpg` 
-  //const url= `https://2mxff3.sharepoint.com${result?.data?.ServerRelativeUrl}`;
+  const url = `https://2mxff3.sharepoint.com${result?.data?.ServerRelativeUrl}` 
+  
   const list = sp.web.lists.getByTitle("users");
 
   try {
@@ -207,6 +207,109 @@ const uploadImage= async (req: Request, res: Response) =>  {
   }}
       
 
+//documents 
+const uploadDocument = async (req: Request, res: Response) => {
+  let file = (req?.files as any)?.file;
+
+  let id: number = Number.parseInt(req.params.id);
+
+  console.log("imagetype", file);
+
+  if (!file) {
+    console.error("No file selected");
+
+    return res.status(400).json({
+      success: false,
+
+      message: "No file selected",
+    });
+  }
+
+  const documentLibraryName = `EmployeLibrary/${id}`;
+
+  const fileNamePath = file.name;
+
+  let result: any;
+
+  if (file?.size <= 10485760) {
+    // small upload
+
+    console.log("Starting small file upload");
+
+    result = await sp.web
+
+      .getFolderByServerRelativePath(documentLibraryName)
+
+      .files.addUsingPath(fileNamePath, file.data, { Overwrite: true });
+  } else {
+    // large upload
+
+    console.log("Starting large file upload");
+
+    result = await sp.web
+
+      .getFolderByServerRelativePath(documentLibraryName)
+
+      .files.addChunked(
+        fileNamePath,
+
+        file,
+
+        () => {
+          console.log(`Upload progress: `);
+        },
+
+        true
+      );
+  }
+
+  res.status(200).json({
+    success: true,
+
+    message: "Document Uploaded succesfullly",
+  });
+};
 
 
-export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update,uploadImage};
+
+// get file by id
+const getFilesInDirectory = async (req: Request, res: Response) => {
+  let id: number = Number.parseInt(req.params.id);
+
+  console.log("files listn");
+  const documentLibraryName = `EmployeeLibrary/${id}`;
+
+  try {
+    const folder = await sp.web
+
+      .getFolderByServerRelativePath(documentLibraryName)
+
+      .files.get();
+
+
+    console.log(documentLibraryName);
+
+    const files = folder.map((file: any) => {
+      return file;
+    });
+
+    res.status(200).json({
+      success: true,
+
+      message: "Retrieved files in directory",
+
+      files,
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+
+      message: "Error retrieving files in directory",
+    });
+  }
+};
+
+
+export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update,uploadImage,uploadDocument,getFilesInDirectory};

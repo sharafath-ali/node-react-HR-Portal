@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import img from "../assets/hr-connect-logo.png";
 import {  useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
+import Loader from '../LoaderComponent/loader';
 
 
 export interface IUploadProps {
@@ -13,24 +14,27 @@ export interface IUploadProps {
 export default function Upload (props: IUploadProps) {
   const Navigate=useNavigate()
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [loading,setloading]=useState<any>(false);//loader
   let {id} = useParams();
   
   const handleImageChange = (e:any) => {
     const file = e.target.files && e.target.files[0];
-    const reader = new FileReader();
+    setSelectedImage(file)
+    // const reader = new FileReader();
 
-    reader.onloadend = () => {
-      setSelectedImage(reader.result as string);
-    }
+    // reader.onloadend = () => {
+    //   setSelectedImage(reader.result as string);
+    // }
 
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      setSelectedImage(null);
-    }
+    // if (file) {
+    //   reader.readAsDataURL(file);
+    // } else {
+    //   setSelectedImage(null);
+    // }
   }
 
   const handleFileUpload = async () => {
+ console.log(selectedImage);
  
     if (!selectedImage) return;
     const formData = new FormData();
@@ -38,7 +42,7 @@ export default function Upload (props: IUploadProps) {
   
     try {
       const response = await axios.put(
-        `http://localhost:5000/get/imageupload/${id}`,
+        `http://localhost:5000/get/image/${id}`,
         formData,
         {
           headers: {
@@ -48,7 +52,7 @@ export default function Upload (props: IUploadProps) {
       );
   
       console.log(response);
-  
+      setloading(false);
       
     } catch (error) {
       console.log(error);
@@ -73,6 +77,7 @@ export default function Upload (props: IUploadProps) {
         </Container>
       </Navbar>
       </div>
+      {loading?(<Loader/>):(
       <div className="container">
         <h1 className="form-head-text text-center m-5">Upload Employee Image</h1>
         <div className="container mt-5">
@@ -100,7 +105,7 @@ export default function Upload (props: IUploadProps) {
         </div>
       </div>
     </div>
-    </div>
+    </div>)}
   </div>
   );
 }

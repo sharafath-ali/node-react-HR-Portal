@@ -1,24 +1,19 @@
-const handleFileUpload = async () => {
-  if (!selectedFile) return;
-  const formData = new FormData();
-
-  formData.append("image", selectedFile);
-
+const fetchData = React.useCallback(async () => {
   try {
-    const response = await axios.put(
-      `http://localhost:5000/image/${id}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.get(`http://localhost:5000/files/${id}`);
+
+    const files = response.data.files;
 
     console.log(response);
 
-    setImage(response.data.image);
+    console.log(typeof files);
+
+    setFiles(files);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
-};
+}, [id]);
+
+React.useEffect(() => {
+  fetchData();
+}, []);

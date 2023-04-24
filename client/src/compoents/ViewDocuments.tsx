@@ -1,13 +1,38 @@
 import * as React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import img from '../assets/hr-connect-logo.png'
 import './ViewDocuments.css'
+import axios from 'axios';
 export interface IViewDocumentsProps {
 }
 
 export default function ViewDocuments (props: IViewDocumentsProps) {
     const navigate=useNavigate()
+    const [files, setFiles] = React.useState<Document[]>([]);
+    let {id} = useParams();
+
+    const fetchData = React.useCallback(async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get/files/${id}`);
+  
+        const files = response.data.files;
+    
+        console.log(response);
+    
+        console.log(typeof files);
+    
+        setFiles(files);
+      } catch (error) {
+        console.error(error);
+      }
+    }, [id]);
+    
+    React.useEffect(() => {
+      fetchData();
+    }, []);
+
+    
   return (
     <div>
     <Navbar className="MainNavbar" expand="lg">
