@@ -13,3 +13,4 @@ export default function SearchProvider(Props: Props) {
     </SearchContext.Provider>
   )
 }
+

@@ -38,11 +38,13 @@ export default function App (props: IAppProps) {
         "http://localhost:5000/get/add",
         newEmployee
       );
+      console.log(`responce ${response.data?.id}`);
+      navigate(`/Upload/${response.data?.id}`);
       console.log(`responce ${response}`);
     } catch (error) {
       console.error(error);
     }
-    navigate("/Upload");
+    
   }
   
   return (

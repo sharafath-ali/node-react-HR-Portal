@@ -6,6 +6,8 @@ import { SPFetchClient } from "@pnp/nodejs-commonjs";
 import contactroute from "./routes/contactroute";
 import cors from "cors";
 import morgan from 'morgan';
+import fileUpload from "express-fileupload";
+
 const app: Application = express();
 const port: number = 5000;
 {
@@ -33,6 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('tiny'));
+app.use(fileUpload());
 
 app.use("/get", contactroute);
 

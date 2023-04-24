@@ -14,7 +14,6 @@ export interface IAppProps {
 }
 
 export default function App(props: IAppProps) {
-
   const { filter, setfilter } = useContext(SearchContext);
   const navigate = useNavigate();
 

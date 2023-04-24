@@ -25,8 +25,8 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
   let {id} = useParams();
   
   function Documentview(){
-    return navigate('/ViewDocuments')
-  }
+    return navigate(`/ViewDocuments/${id}`)
+  }                  
   function Update(){
     setEdit(false)    
   };

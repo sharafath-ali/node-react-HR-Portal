@@ -80,12 +80,12 @@ const addEmployees = async (req: Request, res: Response) => {
     };
 
     console.log("new user log", newUser);
-    const response = await sp.web.lists.getByTitle("users").items.add(newUser); 
-    console.log(response.data.Id);
-    console.log("logging response", response);
+    const response = (await sp.web.lists.getByTitle("users").items.add(newUser))?.data?.ID; 
+    // console.log(response.data.Id);
+    // console.log("logging response", response);
 
     const documentLibraryName = "EmployeeLibrary";
-    const folderName = response.data.Id;
+    const folderName = response;
     const newFolderName = `${folderName}`;
     const documentLibrary = sp.web.lists.getByTitle(documentLibraryName);
     await documentLibrary.rootFolder.folders.addUsingPath(newFolderName)
@@ -98,7 +98,7 @@ const addEmployees = async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message: "New Employee added succesfuly",
-    response,
+    id:response
   });
 };
 
@@ -150,5 +150,63 @@ const Update=async (req: Request, res: Response) => {
 };
 
 
+//Upload Not Done
+const uploadImage= async (req: Request, res: Response) =>  {
+  const { emplyeeId } = req.params;
+  let selectedFile = (req?.files as any)?.image;
 
-export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update};
+  console.log("imagetype",selectedFile)
+
+  const id = Number(emplyeeId);
+ /////////////////////////////////////////////////////////////////
+  if (!selectedFile) {
+    console.error('No file selected');
+    return res.status(400).json({
+      success: false,
+      message: 'No file selected',
+    });
+  }
+
+  const documentLibraryName = `EmployeeLibrary/${emplyeeId}`;
+  const fileNamePath = `profilepic.jpg`;
+
+  let result: any;
+  if (selectedFile?.size <= 10485760) {
+    // small upload
+    console.log('Starting small file upload');
+    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addUsingPath(fileNamePath, selectedFile.data, { Overwrite: true });
+  } else {
+    // large upload
+    console.log('Starting large file upload');
+    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addChunked(fileNamePath, selectedFile, data => {
+      console.log(`progress`);
+    }, true);
+  }
+
+  console.log('Server relative URL:', result?.data?.ServerRelativeUrl);
+  const url = ` https://2mxff3.sharepoint.com/sites/SharafathAli/EmployeeLibrary/${emplyeeId}/profilepic.jpg` 
+  //const url= `https://2mxff3.sharepoint.com${result?.data?.ServerRelativeUrl}`;
+  const list = sp.web.lists.getByTitle("users");
+
+  try {
+    await list.items.getById(id).update({
+      Image_url: url,
+    });
+
+    console.log('File upload successful');
+    res.status(200).json({
+      success: true,
+      message: 'Profile picture uploaded successfully',
+    });
+  } catch (error) {
+    console.error('Error while updating employee item:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error while updating employee item',
+    });
+  }}
+      
+
+
+
+export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update,uploadImage};

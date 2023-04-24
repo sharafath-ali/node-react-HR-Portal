@@ -1,16 +1,21 @@
 import EmployeeCard from "./EmployeeCard";
 import { IEmployee } from "../Type";
-import "./EmployeeCard.css";
-import { useEffect, useState } from "react";
+import "./Cardsection.css";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import SearchContext from "../contexts/SearchContext";
+import MainNavbar from "./MainNavbar";
+import { CircularProgress } from "@mui/material";
+import Loader from "../LoaderComponent/loader";
+import SearchProvider from "../contexts/SearchContext";
 //import { useNavigate } from "react-router-dom";
 
 export interface ICardsectionProps { }
-
 export default function Cardsection(props: ICardsectionProps) {
   const [user, setUser] = useState<any>(null);
+  const [loading,setloading]=useState<any>(true);//loader
   // navigate = useNavigate();
-
+  //const {filter ,setfilter}=useContext(SearchContext)
   const getAllEmployee = async () => {
     try {
       const headers = {
@@ -30,13 +35,20 @@ export default function Cardsection(props: ICardsectionProps) {
   }, []);
 
   console.log(user);
-  const handleClick = (id: string) => {
-    // navigate(`/profile/${id}`);
-  };
+ 
+
+  useEffect(() => {
+    setTimeout(() => {
+      setloading(false);
+    }, 5000);
+  }, []);
 
   return (
+    <>
+    <MainNavbar />
+    {loading?(<Loader/>):(
     <div className="container cardsdisplay">
-      <h1 className="mt-5 fw-bold">Employees</h1>
+      {/*<h1 className="mt-5 fw-bold text-center ">Employees</h1>*/}
       <div className="row mb-5">
         {user?.map(
           (
@@ -58,12 +70,11 @@ export default function Cardsection(props: ICardsectionProps) {
                 email={user.email}
                 des={user.designation}
                 Id={user.Id}
-                Image_url={user.Image_url}
-              />
+                Image_url={user.Image_url} />
             );
           }
         )}
       </div>
-    </div>
+    </div>)}</>
   );
 }
