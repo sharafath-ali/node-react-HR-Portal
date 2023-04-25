@@ -9,7 +9,7 @@ import {
   uploadImage,
   uploadDocument,
   getFilesInDirectory,
-  //downloadFile
+  downloadFile
 } from "../controller/contactcontroller";
 
 const router = express.Router();
@@ -32,5 +32,5 @@ router.put("/document/:id", uploadDocument);
 
 router.get("/files/:id", getFilesInDirectory);
 
-//router.get("/document/download", downloadFile);
+router.get("/document/download", downloadFile);
 export default router;

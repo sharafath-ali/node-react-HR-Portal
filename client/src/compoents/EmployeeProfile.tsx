@@ -10,6 +10,8 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import FolderSharedRoundedIcon from '@mui/icons-material/FolderSharedRounded';
 import { Link, useParams ,useNavigate } from "react-router-dom";
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Loader from "../LoaderComponent/loader";
 export interface IEmployeeProfileProps {
 }
@@ -24,7 +26,15 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
   const [Id,setId]=useState<number>()
   const navigate = useNavigate();
   const [loading,setloading]=useState<any>(true);//loader
-  let {id} = useParams();
+
+  //modal state
+    const [show, setShow] = useState(false);
+    let {id} = useParams();
+  //modal state end and fn start
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  //modal fn end
+  
   
   function Documentview(){
     return navigate(`/ViewDocuments/${id}`)
@@ -64,6 +74,7 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
       try {
         await axios.delete(`http://localhost:5000/get/employ/${id}`);
         navigate(`/`);
+        setShow(false)
       } catch (error) {
         console.error("Error deleting while deleting:", error);
       }
@@ -126,9 +137,23 @@ export default function EmployeeProfile (props: IEmployeeProfileProps) {
                 <div className="content ">
                 <p className="mt-4">Skills:React.js JavaScript Redux or other state management libraries React Router UI/UX design principles Testing with Jest and Enzyme Web development tools (e.g., Git, npm, yarn, Webpack) Performance optimization Problem-solving Collaboration and teamwork Continuous learning mindset</p>
                 <div className="d-flex justify-content-around mt-5">
-                <button className="button-icons color-pink" onClick={Delete}> <DeleteRoundedIcon className="icon"/> </button>
+                <button className="button-icons color-pink" onClick={handleShow}> <DeleteRoundedIcon className="icon"/> </button>
                 <button className="button-icons color-green" onClick={Update} > <EditRoundedIcon className="icon"/> </button>
                 <button className="button-icons color-blue" onClick={Documentview}> <FolderSharedRoundedIcon className="icon"/> </button>
+                <Modal show={show} onHide={handleClose} animation={true} centered={true}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Alert!!...</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Do You want to Delete this Employee details</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                Back
+                </Button>
+                <Button variant="primary" onClick={Delete}>
+                 Delete the Employee
+              </Button>
+              </Modal.Footer>
+              </Modal>
                 </div>
                 </div>
               </div>

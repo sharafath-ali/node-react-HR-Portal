@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { sp } from "@pnp/sp-commonjs";
 import { SPFetchClient } from "@pnp/nodejs-commonjs";
+import getContentType from "../getContentType";
 
 //function for getAllEmployees =done
 
@@ -225,7 +226,7 @@ const uploadDocument = async (req: Request, res: Response) => {
     });
   }
 
-  const documentLibraryName = `EmployeLibrary/${id}`;
+  const documentLibraryName = `EmployeeLibrary/${id}`;
 
   const fileNamePath = file.name;
 
@@ -268,7 +269,7 @@ const uploadDocument = async (req: Request, res: Response) => {
 
     message: "Document Uploaded succesfullly",
   });
-};
+}
 
 
 
@@ -311,5 +312,19 @@ const getFilesInDirectory = async (req: Request, res: Response) => {
   }
 };
 
+//download files
+const downloadFile = async (req: Request, res: Response) => {
+  const serverRelativePath = req.query.serverRelativePath as string;
+  const file = sp.web.getFileByServerRelativePath(serverRelativePath);
+  const buffer: ArrayBuffer = await file.getBuffer();
+  
+  const fileName = serverRelativePath.split('/').pop() || ''; // get the file name with extension
+  const contentType = getContentType(fileName); // get the content type based on file extension
 
-export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update,uploadImage,uploadDocument,getFilesInDirectory};
+  res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+  res.setHeader('Content-type', contentType);
+  res.status(200).send(Buffer.from(buffer));
+};
+
+
+export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update,uploadImage,uploadDocument,getFilesInDirectory,downloadFile};
