@@ -9,14 +9,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-export interface IAppProps {}
+export interface IAppProps { }
 
 export default function App(props: IAppProps) {
   const [email, setemail] = useState<string>("");
   const [first_name, setfirst_name] = useState<string>("");
   const [designation, setdesignation] = useState<string>("");
   const [last_name, setlast_name] = useState<string>("");
-
+  const [gender, setGender] = useState<string>("");
+  const [City, setCity] = useState<string>("")
+  const [language, setlanguage] = useState<string>("")
   const navigate = useNavigate();
 
   function Home() {
@@ -113,10 +115,40 @@ export default function App(props: IAppProps) {
                 <input
                   type="text"
                   className="form-control my-4"
-                  id="name"
-                  placeholder="Enter Skills"
-                  onChange={(e) => setfirst_name(e.target.value)}
+                  id="email"
+                  placeholder="Enter City"
+                  onChange={(e) => setCity(e.target.value)}
                 />
+              </div>
+
+              <div className="form-group">
+                <select
+                  className="form-control my-4"
+                  id="gender"
+                  value={gender}
+                  name="gender"
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <select
+                  className="form-control my-4"
+                  id="language"
+                  name="language"
+                  onChange={(e) => setlanguage(e.target.value)}
+                >
+                  <option value="">Select Language</option>
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                  <option value="French">French</option>
+                  <option value="German">German</option>
+                </select>
               </div>
 
               <button
