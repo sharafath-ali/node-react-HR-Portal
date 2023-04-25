@@ -6,15 +6,14 @@ import Navbar from "react-bootstrap/Navbar";
 import img from "../assets/hr-connect-logo.png";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
-import './MainNavbar.css';
-import { SearchContext } from "../contexts/SearchContext";
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-export interface IAppProps {
-}
+import "./MainNavbar.css";
+import { SContext } from "../contexts/SearchContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+export interface IAppProps {}
 
 export default function App(props: IAppProps) {
-  const { filter, setfilter } = useContext(SearchContext);
+  const { filter, setfilter } = useContext(SContext);
   const navigate = useNavigate();
 
   return (
@@ -30,7 +29,8 @@ export default function App(props: IAppProps) {
           ></Nav>
           <Button
             className="AddButton round-corner"
-            variant="outline-secondary" onClick={() => navigate('/AddEmployee')}
+            variant="outline-secondary"
+            onClick={() => navigate("/AddEmployee")}
           >
             <AddIcon /> Add
           </Button>

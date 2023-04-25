@@ -1,4 +1,6 @@
 .cardsdisplay {
-    text-align: center !important;
+  text-align: center !important;
 }
-*{margin:0}
+* {
+  margin: 0;
+}

@@ -1,6 +1,6 @@
-.loader{
+.loader {
     display: flex !important;
-    justify-content: center  !important;
+    justify-content: center !important;
     align-items: center !important;
     height: 70vh !important;
 }

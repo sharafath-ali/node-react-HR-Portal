@@ -1,16 +1,15 @@
-import  { createContext, useState } from 'react'
-import * as React from 'react';
-export const SearchContext = createContext<any>('')
+import { createContext, useState } from "react";
+import * as React from "react";
+export const SContext = createContext<any>("");
 type Props = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
-export default function SearchProvider(Props: Props) {
-  const [filter,setfilter]=useState<string>('')
+export default function SProvider(Props: Props) {
+  const [filter, setfilter] = useState<string>("");
   return (
-    <SearchContext.Provider value={{ filter,setfilter}}>
-        {Props.children}
-    </SearchContext.Provider>
-  )
+    <SContext.Provider value={{ filter, setfilter }}>
+      {Props.children}
+    </SContext.Provider>
+  );
 }
-

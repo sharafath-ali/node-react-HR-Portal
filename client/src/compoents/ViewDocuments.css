@@ -1,52 +1,51 @@
 .table-container {
-    max-width: 100%;
-    overflow-x: auto;
-
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 /* Table */
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 30px;
-    border: 0
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 30px;
+  border: 0;
 }
 
 /* Table header */
 .table th {
-    font-weight: bold;
-    background-color: #ffffff;
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+  font-weight: bold;
+  background-color: #ffffff;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
 /* Table rows */
 .table tr {
-    border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 /* Table cells */
 .table td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
 /* Download button */
 .download-button {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .download-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
-.filecontainer{
-    color: #007bff;
+.filecontainer {
+  color: #007bff;
 }

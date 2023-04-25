@@ -9,30 +9,29 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-export interface IAppProps {
-}
+export interface IAppProps {}
 
-export default function App (props: IAppProps) {
+export default function App(props: IAppProps) {
   const [email, setemail] = useState<string>("");
   const [first_name, setfirst_name] = useState<string>("");
   const [designation, setdesignation] = useState<string>("");
   const [last_name, setlast_name] = useState<string>("");
 
-  const navigate=useNavigate()
-  
+  const navigate = useNavigate();
+
   function Home() {
-    navigate("/");  //function for navigating to home 
+    navigate("/"); //function for navigating to home
   }
 
-  async function save(e:any) {
-    e.preventDefault()
+  async function save(e: any) {
+    e.preventDefault();
     const newEmployee = {
-      first_name:first_name,
-      last_name:last_name,
+      first_name: first_name,
+      last_name: last_name,
       email: email,
-      designation:designation
-      };
-   
+      designation: designation,
+    };
+
     try {
       const response = await axios.post(
         "http://localhost:5000/get/add",
@@ -44,14 +43,13 @@ export default function App (props: IAppProps) {
     } catch (error) {
       console.error(error);
     }
-    
   }
-  
+
   return (
     <div className="parent-container">
       <Navbar className="MainNavbar" expand="lg">
         <Container className="NavContainer" fluid>
-          <img className="NavLogo" src={img}  onClick={Home}/>
+          <img className="NavLogo" src={img} onClick={Home} />
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -71,7 +69,6 @@ export default function App (props: IAppProps) {
           <div className="col-md-6 right-half ">
             <h1 className="form-head-text text-center">New Employee</h1>
             <form>
-
               <div className="form-group">
                 <input
                   type="text"
@@ -81,8 +78,6 @@ export default function App (props: IAppProps) {
                   onChange={(e) => setfirst_name(e.target.value)}
                 />
               </div>
-
-              
 
               <div className="form-group">
                 <input
@@ -103,7 +98,7 @@ export default function App (props: IAppProps) {
                   onChange={(e) => setemail(e.target.value)}
                 />
               </div>
-              
+
               <div className="form-group">
                 <input
                   type="text"
@@ -113,7 +108,7 @@ export default function App (props: IAppProps) {
                   onChange={(e) => setdesignation(e.target.value)}
                 />
               </div>
-              
+
               <div className="form-group">
                 <input
                   type="text"
@@ -124,7 +119,13 @@ export default function App (props: IAppProps) {
                 />
               </div>
 
-              <button type="submit" className="btn btn-primary  my-4 aligh-right" onClick={(e)=>{save(e)}}>
+              <button
+                type="submit"
+                className="btn btn-primary  my-4 aligh-right"
+                onClick={(e) => {
+                  save(e);
+                }}
+              >
                 Submit
               </button>
             </form>
@@ -134,4 +135,3 @@ export default function App (props: IAppProps) {
     </div>
   );
 }
-

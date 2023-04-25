@@ -1,52 +1,52 @@
 .MainNavbar {
-    padding: 30px 50px !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    background-color: transparent !important;
+  padding: 30px 50px !important;
+  display: flex !important;
+  justify-content: space-around !important;
+  background-color: transparent !important;
 }
 
 .NavLogo {
-    height: 4vw !important;
+  height: 4vw !important;
 }
 
 .AddButton {
-    align-items: center !important;
-    width: 7vw !important;
-    margin: 0 1vw !important;
-    background-color: #245afe !important;
-    height: 6vh !important;
-    color: white !important;
-    font-weight: 500 !important;
+  align-items: center !important;
+  width: 7vw !important;
+  margin: 0 1vw !important;
+  background-color: #245afe !important;
+  height: 6vh !important;
+  color: white !important;
+  font-weight: 500 !important;
 }
 
 .AddButton:hover {
-    background-color: rgb(0, 0, 0) !important;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 .round-corner {
-    border-radius: 100px !important;
-    border: solid 1px rgb(224, 224, 224) !important;
+  border-radius: 100px !important;
+  border: solid 1px rgb(224, 224, 224) !important;
 }
 
 .search-container {
-    padding: 0 14px !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    background-color: white !important;
+  padding: 0 14px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background-color: white !important;
 }
 
 .seach-bar {
-    border: transparent !important;
-    height: 46px !important;
-    padding-left: 10px !important;
-    background-color: transparent !important;
+  border: transparent !important;
+  height: 46px !important;
+  padding-left: 10px !important;
+  background-color: transparent !important;
 }
 
 .seach-bar:focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 .search-icon {
-    color: rgb(133, 133, 133) !important;
+  color: rgb(133, 133, 133) !important;
 }

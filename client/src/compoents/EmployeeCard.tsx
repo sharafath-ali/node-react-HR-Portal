@@ -22,7 +22,7 @@ export default function EmployeeCard({
   Image_url,
   keys,
 }: IEmployeeCardProps) {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [test, setTest] = useState("");
 
   useEffect(() => {
@@ -44,8 +44,8 @@ export default function EmployeeCard({
       <Card
         className="emp-card rounded-5 card-shadow"
         style={{ width: "100%" }}
-        onClick={()=>navigate(`ViewProfile/${Id}`)}
-      > 
+        onClick={() => navigate(`ViewProfile/${Id}`)}
+      >
         <Card.Img
           className="rounded-5 p-2 card-img-top"
           variant="top"
