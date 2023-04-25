@@ -49,6 +49,7 @@ const getSingleEmployee = async (req: Request, res: Response) => {
 // function for delete =done
 const deleteEmployee = async (req: Request, res: Response) => {
   console.log("delete employee");
+  const f=req.params.id
   let id: number = Number.parseInt(req.params.id);
   console.log("id", id);
   try {
@@ -57,7 +58,13 @@ const deleteEmployee = async (req: Request, res: Response) => {
       throw new Error("User not found");
     } else {
       await sp.web.lists.getByTitle("users").items.getById(id).delete();
+      
 
+     const documentLibraryName = `EmployeeLibrary`;
+
+     const folder =await sp.web.lists.getByTitle(documentLibraryName).rootFolder.folders.getByName(f)
+
+      await folder.delete();
       res.send({ message: "Deleted successfully" });
     }
   } catch (error) {
@@ -69,54 +76,52 @@ const deleteEmployee = async (req: Request, res: Response) => {
 
 //function for addemployee= done
 const addEmployees = async (req: Request, res: Response) => {
-  const {first_name,last_name,email,designation} = req.body;
-  
-    console.log("start.");
-    console.log(req.body, "req body log");
-    const newUser= {
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      designation:designation
-    };
+  const { first_name, last_name, email, designation, Gender, DoB, languages } =
+    req.body;
 
-    console.log("new user log", newUser);
-    const response = (await sp.web.lists.getByTitle("users").items.add(newUser))?.data?.ID; 
-    // console.log(response.data.Id);
-    // console.log("logging response", response);
+  console.log("start.");
+  console.log(req.body, "req body log");
+  const newUser = {
+    first_name: first_name,
+    last_name: last_name,
+    email: email,
+    designation: designation,
+    Gender: Gender,
+    DoB: DoB,
+    languages: languages,
+  };
 
-    const documentLibraryName = "EmployeeLibrary";
-    const folderName = response;
-    const newFolderName = `${folderName}`;
-    const documentLibrary = sp.web.lists.getByTitle(documentLibraryName);
-    await documentLibrary.rootFolder.folders.addUsingPath(newFolderName)
-      .then(() => {
-        console.log(`Folder ${newFolderName} created successfully.`);
-      })
-    .catch((error:any)=> {
-    console.log(`Error creating folder: ${error}`);
-  });
+  console.log("new user log", newUser);
+  const response = (await sp.web.lists.getByTitle("users").items.add(newUser))
+    ?.data?.ID;
+  // console.log(response.data.Id);
+  // console.log("logging response", response);
+
+  const documentLibraryName = "EmployeeLibrary";
+  const folderName = response;
+  const newFolderName = `${folderName}`;
+  const documentLibrary = sp.web.lists.getByTitle(documentLibraryName);
+  await documentLibrary.rootFolder.folders
+    .addUsingPath(newFolderName)
+    .then(() => {
+      console.log(`Folder ${newFolderName} created successfully.`);
+    })
+    .catch((error: any) => {
+      console.log(`Error creating folder: ${error}`);
+    });
   res.status(200).json({
     success: true,
     message: "New Employee added succesfuly",
-    id:response
+    id: response,
   });
 };
 
-
-
-
 //function for Update= done
 
-
-
-
-const Update=async (req: Request, res: Response) => {
+const Update = async (req: Request, res: Response) => {
   let id: number = Number.parseInt(req.params.id);
 
-  const {first_name,last_name,email,designation} = req.body;
-
-  
+  const { first_name, last_name, email, designation,Gender, DoB ,languages} = req.body;
 
   try {
     if (isNaN(id)) {
@@ -132,11 +137,17 @@ const Update=async (req: Request, res: Response) => {
       first_name: first_name,
       last_name: last_name,
       email: email,
-      designation:designation
+      designation: designation,
+      Gender: Gender,
+      DoB: DoB,
+      languages: languages
     };
 
-    const response= await sp.web.lists.getByTitle("users").items.getById(id).update(updateEmploy);
-    console.log(response)
+    const response = await sp.web.lists
+      .getByTitle("users")
+      .items.getById(id)
+      .update(updateEmploy);
+    console.log(response);
 
     res.status(200).json({
       success: true,
@@ -150,21 +161,19 @@ const Update=async (req: Request, res: Response) => {
   }
 };
 
-
 //Upload  Done
-const uploadImage= async (req: Request, res: Response) =>  {
-
+const uploadImage = async (req: Request, res: Response) => {
   let image = (req?.files as any)?.image;
 
-  console.log("req?.files=>",req?.files)
- 
-  const id:number= Number.parseInt(req.params.id);
- /////////////////////////////////////////////////////////////////
+  console.log("req?.files=>", req?.files);
+
+  const id: number = Number.parseInt(req.params.id);
+  /////////////////////////////////////////////////////////////////
   if (!image) {
-    console.error('No file selected');
+    console.error("No file selected");
     return res.status(400).json({
       success: false,
-      message: 'No file selected',
+      message: "No file selected",
     });
   }
 
@@ -174,19 +183,28 @@ const uploadImage= async (req: Request, res: Response) =>  {
   let result: any;
   if (image?.size <= 10485760) {
     // small upload
-    console.log('Starting small file upload');
-    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addUsingPath(fileNamePath, image.data, { Overwrite: true });
+    console.log("Starting small file upload");
+    result = await sp.web
+      .getFolderByServerRelativePath(documentLibraryName)
+      .files.addUsingPath(fileNamePath, image.data, { Overwrite: true });
   } else {
     // large upload
-    console.log('Starting large file upload');
-    result = await sp.web.getFolderByServerRelativePath(documentLibraryName).files.addChunked(fileNamePath, image, ()=> {
-      console.log(`progress`);
-    }, true);
+    console.log("Starting large file upload");
+    result = await sp.web
+      .getFolderByServerRelativePath(documentLibraryName)
+      .files.addChunked(
+        fileNamePath,
+        image,
+        () => {
+          console.log(`progress`);
+        },
+        true
+      );
   }
 
-  console.log('Server relative URL:', result?.data?.ServerRelativeUrl);
-  const url = `https://2mxff3.sharepoint.com${result?.data?.ServerRelativeUrl}` 
-  
+  console.log("Server relative URL:", result?.data?.ServerRelativeUrl);
+  const url = `https://2mxff3.sharepoint.com${result?.data?.ServerRelativeUrl}`;
+
   const list = sp.web.lists.getByTitle("users");
 
   try {
@@ -194,21 +212,21 @@ const uploadImage= async (req: Request, res: Response) =>  {
       Image_url: url,
     });
 
-    console.log('File upload successful');
+    console.log("File upload successful");
     res.status(200).json({
       success: true,
-      message: 'Profile picture uploaded successfully',
+      message: "Profile picture uploaded successfully",
     });
   } catch (error) {
-    console.error('Error while updating employee item:', error);
+    console.error("Error while updating employee item:", error);
     res.status(500).json({
       success: false,
-      message: 'Error while updating employee item',
+      message: "Error while updating employee item",
     });
-  }}
-      
+  }
+};
 
-//documents 
+//documents
 const uploadDocument = async (req: Request, res: Response) => {
   let file = (req?.files as any)?.file;
 
@@ -269,9 +287,7 @@ const uploadDocument = async (req: Request, res: Response) => {
 
     message: "Document Uploaded succesfullly",
   });
-}
-
-
+};
 
 // get file by id
 const getFilesInDirectory = async (req: Request, res: Response) => {
@@ -286,7 +302,6 @@ const getFilesInDirectory = async (req: Request, res: Response) => {
       .getFolderByServerRelativePath(documentLibraryName)
 
       .files.get();
-
 
     console.log(documentLibraryName);
 
@@ -317,14 +332,23 @@ const downloadFile = async (req: Request, res: Response) => {
   const serverRelativePath = req.query.serverRelativePath as string;
   const file = sp.web.getFileByServerRelativePath(serverRelativePath);
   const buffer: ArrayBuffer = await file.getBuffer();
-  
-  const fileName = serverRelativePath.split('/').pop() || ''; // get the file name with extension
+
+  const fileName = serverRelativePath.split("/").pop() || ""; // get the file name with extension
   const contentType = getContentType(fileName); // get the content type based on file extension
 
-  res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
-  res.setHeader('Content-type', contentType);
+  res.setHeader("Content-disposition", `attachment; filename=${fileName}`);
+  res.setHeader("Content-type", contentType);
   res.status(200).send(Buffer.from(buffer));
 };
 
-
-export { getAllEmployees, getSingleEmployee, deleteEmployee, addEmployees ,Update,uploadImage,uploadDocument,getFilesInDirectory,downloadFile};
+export {
+  getAllEmployees,
+  getSingleEmployee,
+  deleteEmployee,
+  addEmployees,
+  Update,
+  uploadImage,
+  uploadDocument,
+  getFilesInDirectory,
+  downloadFile,
+};

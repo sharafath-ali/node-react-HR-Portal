@@ -16,9 +16,9 @@ export default function App(props: IAppProps) {
   const [first_name, setfirst_name] = useState<string>("");
   const [designation, setdesignation] = useState<string>("");
   const [last_name, setlast_name] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
-  const [City, setCity] = useState<string>("")
-  const [language, setlanguage] = useState<string>("")
+  const [Gender, setGender] = useState<string>("");
+  const [DoB, setDoB] = useState<string>("")
+  const [languages, setlanguages] = useState<string>("")
   const navigate = useNavigate();
 
   function Home() {
@@ -32,6 +32,9 @@ export default function App(props: IAppProps) {
       last_name: last_name,
       email: email,
       designation: designation,
+      Gender: Gender,
+      DoB: DoB,
+      languages: languages
     };
 
     try {
@@ -46,7 +49,11 @@ export default function App(props: IAppProps) {
       console.error(error);
     }
   }
-
+  const getMaxDate = () => {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 15);
+    return today.toISOString().split('T')[0];
+  };
   return (
     <div className="parent-container">
       <Navbar className="MainNavbar" expand="lg">
@@ -113,11 +120,12 @@ export default function App(props: IAppProps) {
 
               <div className="form-group">
                 <input
-                  type="text"
+                  type="date" // Update the type to "date"
                   className="form-control my-4"
-                  id="email"
-                  placeholder="Enter City"
-                  onChange={(e) => setCity(e.target.value)}
+                  id="dob" // Update the id to "dob"
+                  max={getMaxDate()}
+                  placeholder="Select Date" // Update the placeholder
+                  onChange={(e) => setDoB(e.target.value.toString())} // Convert the selected date to string
                 />
               </div>
 
@@ -125,7 +133,7 @@ export default function App(props: IAppProps) {
                 <select
                   className="form-control my-4"
                   id="gender"
-                  value={gender}
+                  value={Gender}
                   name="gender"
                   onChange={(e) => setGender(e.target.value)}
                 >
@@ -139,9 +147,9 @@ export default function App(props: IAppProps) {
               <div className="form-group">
                 <select
                   className="form-control my-4"
-                  id="language"
-                  name="language"
-                  onChange={(e) => setlanguage(e.target.value)}
+                  id="languages"
+                  name="languages"
+                  onChange={(e) => setlanguages(e.target.value)}
                 >
                   <option value="">Select Language</option>
                   <option value="English">English</option>

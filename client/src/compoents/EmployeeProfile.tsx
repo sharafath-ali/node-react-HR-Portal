@@ -25,6 +25,9 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
   const [Id, setId] = useState<number>();
   const navigate = useNavigate();
   const [loading, setloading] = useState<any>(true); //loader
+  const [Gender, setGender] = useState<string>("");
+  const [DoB, setDoB] = useState<string>("")
+  const [languages, setlanguages] = useState<string>("")
 
   //modal state
   const [show, setShow] = useState(false);
@@ -49,6 +52,9 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
       last_name: last_name,
       email: email,
       designation: designation,
+      Gender: Gender,
+      DoB: DoB,
+      languages: languages
     };
 
     try {
@@ -90,6 +96,9 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
         setdesignation(response.data.designation);
         setlast_name(response.data.last_name);
         setId(response.data.Id);
+        setGender(response.data.Gender)
+        setDoB(response.data.DoB)
+        setlanguages(response.data.languages)
         setloading(false);
       } catch (error) {
         console.error(error);
@@ -98,8 +107,12 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
 
     GetDetails();
   }, []);
-
-  return (
+  const getMaxDate = () => {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 15);
+    return today.toISOString().split('T')[0];
+  };
+  return ( 
     <div>
       <Navbar className="MainNavbar" expand="lg">
         <Container className="NavContainer" fluid>
@@ -198,15 +211,16 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
           )}
         </div>
       ) : (
-        <div className="container">
-          <h1 className="form-head-text text-center m-5">
+        <div className="container items">
+          <h1 className="form-head-text text-center m-5 text-dark">
             Update Employee Details
           </h1>
           <form>
-            <div className="form-group">
+            <div className="form-group row justify-content-center">
+              <label htmlFor="name" className="label" style={{marginLeft: '.5rem'}}>First Name :</label>
               <input
                 type="text"
-                className="form-control my-4"
+                className="form-control my-2 mb-4 w-50"
                 id="name"
                 value={first_name}
                 placeholder="Enter FirstName"
@@ -215,10 +229,11 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
             </div>
 
             <div className="form-group">
+               <label htmlFor="name" className="label font-weight-bolder font-italic" style={{marginLeft: '.5rem'}}>Last Name :</label>
               <input
                 type="text"
-                className="form-control my-4"
-                id="email"
+                className="form-control my-2 mb-4 w-50"
+                id="name"
                 value={last_name}
                 placeholder="Enter LastName"
                 onChange={(e) => setlast_name(e.target.value)}
@@ -226,9 +241,10 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
             </div>
 
             <div className="form-group">
+              <label htmlFor="email" style={{marginLeft: '.5rem'}}>Email :</label>
               <input
                 type="email"
-                className="form-control my-4"
+                className="form-control my-2 mb-4 w-50"
                 id="email"
                 value={email}
                 placeholder="Enter Email"
@@ -237,15 +253,62 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
             </div>
 
             <div className="form-group">
+              <label htmlFor="designation" style={{marginLeft: '.5rem'}}>Designation:</label>
               <input
                 type="text"
-                className="form-control my-4"
+                className="form-control my-2 mb-4 w-50"
                 value={designation}
                 id="email"
                 placeholder="Enter Designation"
                 onChange={(e) => setdesignation(e.target.value)}
               />
             </div>
+
+            <div className="form-group">
+                <label htmlFor="dob" style={{marginLeft: '.5rem'}}>Date of Birth:</label>
+                <input
+                  type="date" // Update the type to "date"
+                  className="form-control my-2 mb-4 w-50"
+                  id="dob" // Update the id to "dob"
+                  max={getMaxDate()}
+                  value={DoB}
+                  placeholder="Select Date" // Update the placeholder
+                  onChange={(e) => setDoB(e.target.value.toString())} // Convert the selected date to string
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="gender" style={{marginLeft: '.5rem'}}>Gender:</label>
+                <select
+                  className="form-control my-2 mb-4 w-50"
+                  id="gender"
+                  value={Gender}
+                  name="gender"
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="languages" style={{marginLeft: '.5rem'}}>Language:</label>
+                <select
+                  className="form-control my-2 mb-4 w-50"
+                  id="languages"
+                  name="languages"
+                  value={languages}
+                  onChange={(e) => setlanguages(e.target.value)}
+                >
+                  <option value="">Select Language</option>
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                  <option value="French">French</option>
+                  <option value="German">German</option>
+                </select>
+              </div>
 
             <button
               type="submit"

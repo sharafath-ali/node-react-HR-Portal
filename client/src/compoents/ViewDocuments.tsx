@@ -158,7 +158,6 @@ export default function ViewDocuments(props: IViewDocumentsProps) {
                               type="file"
                               className="form-control-file"
                               id="upload-file"
-                              accept="image/*"
                               onChange={handleFileSelect}
                             />
                           </div>
