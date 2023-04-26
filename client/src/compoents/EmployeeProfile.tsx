@@ -150,14 +150,24 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
                     <h6>({data?.designation})</h6>
                     <h6>{data?.email}</h6>
                     <div className="content ">
-                      <p className="mt-4">
+                      {/* <h5 className="mt-4 mb-4 text-left">other details :</h5>
+                      <p className="mt-2 text-left ">
+                       gender : {Gender}
+                      </p>
+                      <p className="mt-2 text-left">
+                       languages known : {languages}
+                      </p>
+                      <p className="mt-2 text-left">
+                      Date of Birth : {DoB}
+                      </p> */}
+                       <p className="mt-4">
                         Skills:React.js JavaScript Redux or other state
                         management libraries React Router UI/UX design
                         principles Testing with Jest and Enzyme Web development
                         tools (e.g., Git, npm, yarn, Webpack) Performance
                         optimization Problem-solving Collaboration and teamwork
                         Continuous learning mindset
-                      </p>
+                      </p> 
                       <div className="d-flex justify-content-around mt-5">
                         <button
                           className="button-icons color-pink"
