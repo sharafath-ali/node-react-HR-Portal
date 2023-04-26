@@ -44,5 +44,29 @@ This is a web-based application for managing employees in a company. The applica
 2. Install dependencies for both the frontend and backend by running the following commands in their respective directories:
 
 ```sh
-cd client
+cd server
 npm install
+
+```
+3. Configure the SharePoint list connection in the server by providing the necessary credentials and connection details in the server configuration file.
+
+4. Start the development server for both the frontend and backend by running the following commands in their respective directories:
+
+```sh
+cd client
+npm start
+```
+
+```sh
+cd server
+npm start
+```
+
+5. Access the application in your web browser at http://localhost:3000 to begin using the employment management site.
+Contributing
+If you would like to contribute to this project, feel free to submit a pull request or open an issue with your suggestions or bug reports. Contributions are always welcome!
+
+License
+This project is licensed under the MIT License.
+
+Make sure to replace the image file paths with the correct paths to your actual images in your project.
