@@ -19,6 +19,7 @@ export default function App(props: IAppProps) {
   const [Gender, setGender] = useState<string>("");
   const [DoB, setDoB] = useState<string>("")
   const [languages, setlanguages] = useState<string>("")
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
   function Home() {
@@ -27,6 +28,20 @@ export default function App(props: IAppProps) {
 
   async function save(e: any) {
     e.preventDefault();
+
+    if (
+      !email ||
+      !first_name ||
+      !designation ||
+      !last_name ||
+      !Gender ||
+      !DoB ||
+      !languages
+    ) {
+      setError("Please fill in all fields."); // Set error message
+      return;
+    }
+
     const newEmployee = {
       first_name: first_name,
       last_name: last_name,
@@ -77,6 +92,9 @@ export default function App(props: IAppProps) {
           </div>
           <div className="col-md-6 right-half ">
             <h1 className="form-head-text text-center">New Employee</h1>
+            {error && ( // Render error message if there's an error
+              <div className="alert alert-danger">{error}</div>
+            )}
             <form>
               <div className="form-group">
                 <input

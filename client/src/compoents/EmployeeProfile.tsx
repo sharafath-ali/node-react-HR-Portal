@@ -215,12 +215,15 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
           <h1 className="form-head-text text-center m-5 text-dark">
             Update Employee Details
           </h1>
-          <form>
-            <div className="form-group row justify-content-center">
+          <div className="container">
+          <div className="row d-flex justify-content-center">
+            <div className="col-6 center_potion">
+            <form className="">
+            <div className="form-group">
               <label htmlFor="name" className="label" style={{marginLeft: '.5rem'}}>First Name :</label>
               <input
                 type="text"
-                className="form-control my-2 mb-4 w-50"
+                className="form-control my-2 mb-4 "
                 id="name"
                 value={first_name}
                 placeholder="Enter FirstName"
@@ -232,7 +235,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
                <label htmlFor="name" className="label font-weight-bolder font-italic" style={{marginLeft: '.5rem'}}>Last Name :</label>
               <input
                 type="text"
-                className="form-control my-2 mb-4 w-50"
+                className="form-control my-2 mb-4 "
                 id="name"
                 value={last_name}
                 placeholder="Enter LastName"
@@ -244,7 +247,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
               <label htmlFor="email" style={{marginLeft: '.5rem'}}>Email :</label>
               <input
                 type="email"
-                className="form-control my-2 mb-4 w-50"
+                className="form-control my-2 mb-4"
                 id="email"
                 value={email}
                 placeholder="Enter Email"
@@ -256,7 +259,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
               <label htmlFor="designation" style={{marginLeft: '.5rem'}}>Designation:</label>
               <input
                 type="text"
-                className="form-control my-2 mb-4 w-50"
+                className="form-control my-2 mb-4"
                 value={designation}
                 id="email"
                 placeholder="Enter Designation"
@@ -268,7 +271,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
                 <label htmlFor="dob" style={{marginLeft: '.5rem'}}>Date of Birth:</label>
                 <input
                   type="date" // Update the type to "date"
-                  className="form-control my-2 mb-4 w-50"
+                  className="form-control my-2 mb-4"
                   id="dob" // Update the id to "dob"
                   max={getMaxDate()}
                   value={DoB}
@@ -280,7 +283,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
               <div className="form-group">
                 <label htmlFor="gender" style={{marginLeft: '.5rem'}}>Gender:</label>
                 <select
-                  className="form-control my-2 mb-4 w-50"
+                  className="form-control my-2 mb-4"
                   id="gender"
                   value={Gender}
                   name="gender"
@@ -296,7 +299,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
               <div className="form-group">
                 <label htmlFor="languages" style={{marginLeft: '.5rem'}}>Language:</label>
                 <select
-                  className="form-control my-2 mb-4 w-50"
+                  className="form-control my-2 mb-4"
                   id="languages"
                   name="languages"
                   value={languages}
@@ -320,6 +323,9 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
               Submit
             </button>
           </form>
+            </div>
+          </div>
+          </div>
         </div>
       )}
     </div>
