@@ -8,10 +8,12 @@ import img1 from "../assets/hr-employee-img.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import * as Yup from 'yup'
 
 export interface IAppProps { }
 
 export default function App(props: IAppProps) {
+  
   const [email, setemail] = useState<string>("");
   const [first_name, setfirst_name] = useState<string>("");
   const [designation, setdesignation] = useState<string>("");
@@ -21,13 +23,63 @@ export default function App(props: IAppProps) {
   const [languages, setlanguages] = useState<string>("")
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
+//   const [firstError, setfirstError] = useState("");
+//   const [lastError, setlastError] = useState("");
+//   const [EmailError, setEmailError] = useState("");
+//   const [GenderError, setGenderError] = useState("");
+//   const [DesignationError, setDesignationError] = useState("");
+//   const [DOBError, setDOBError] = useState("");
+//   const [LanguageError, setLanguageError] = useState("");
+  
+ 
 
   function Home() {
-    navigate("/"); //function for navigating to home
+   navigate("/"); //function for navigating to home
   }
-
   async function save(e: any) {
-    e.preventDefault();
+       e.preventDefault();
+    
+//     let isError = false;
+
+// if (first_name.trim() === "") {
+//   setfirstError("Name is required");
+//   isError = true;
+// }
+
+// if (last_name.trim() === "") {
+//   setlastError("Name is required");
+//   isError = true;
+// }
+
+// if (email.trim() === "") {
+//   setEmailError("Email is required");
+//   isError = true;
+
+// } else if (!/\S+@\S+\.\S+/.test(email)) {
+//   setEmailError("Email is invalid");
+//   isError = true;
+// }
+
+// if (Gender.trim() === "") {
+//   setGenderError("Gender is required");
+//   isError = true;
+// }
+
+// if (designation.trim() === "") {
+//   setDesignationError("Designation is required");
+//   isError = true;
+// }
+
+// if (!DoB) {
+//   setDOBError("Please enter a valid date of birth.");
+//   return;
+// }
+
+
+
+// if (!languages) {
+//   setLanguageError(languages ? "" : "enter a place.");
+// }
 
     if (
       !email ||
@@ -103,6 +155,7 @@ export default function App(props: IAppProps) {
                   id="name"
                   placeholder="Enter FirstName"
                   onChange={(e) => setfirst_name(e.target.value)}
+                  required
                 />
               </div>
 
@@ -113,6 +166,7 @@ export default function App(props: IAppProps) {
                   id="email"
                   placeholder="Enter LastName"
                   onChange={(e) => setlast_name(e.target.value)}
+                  required
                 />
               </div>
 
@@ -123,6 +177,7 @@ export default function App(props: IAppProps) {
                   id="email"
                   placeholder="Enter Email"
                   onChange={(e) => setemail(e.target.value)}
+                  required
                 />
               </div>
 
@@ -133,6 +188,7 @@ export default function App(props: IAppProps) {
                   id="email"
                   placeholder="Enter Designation"
                   onChange={(e) => setdesignation(e.target.value)}
+                  required
                 />
               </div>
 
@@ -144,6 +200,7 @@ export default function App(props: IAppProps) {
                   max={getMaxDate()}
                   placeholder="Select Date" // Update the placeholder
                   onChange={(e) => setDoB(e.target.value.toString())} // Convert the selected date to string
+                  required
                 />
               </div>
 
@@ -154,6 +211,7 @@ export default function App(props: IAppProps) {
                   value={Gender}
                   name="gender"
                   onChange={(e) => setGender(e.target.value)}
+                  required
                 >
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
@@ -168,6 +226,7 @@ export default function App(props: IAppProps) {
                   id="languages"
                   name="languages"
                   onChange={(e) => setlanguages(e.target.value)}
+                  required
                 >
                   <option value="">Select Language</option>
                   <option value="English">English</option>

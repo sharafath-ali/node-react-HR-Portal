@@ -28,6 +28,7 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
   const [Gender, setGender] = useState<string>("");
   const [DoB, setDoB] = useState<string>("")
   const [languages, setlanguages] = useState<string>("")
+  const [error, setError] = useState<string>("");
 
   //modal state
   const [show, setShow] = useState(false);
@@ -56,6 +57,19 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
       DoB: DoB,
       languages: languages
     };
+
+    if (
+      !email ||
+      !first_name ||
+      !designation ||
+      !last_name ||
+      !Gender ||
+      !DoB ||
+      !languages
+    ) {
+      setError("Please fill in all fields."); // Set error message
+      return;
+    }
 
     try {
       const url = `http://localhost:5000/get/Update/${id}`;
@@ -225,9 +239,15 @@ export default function EmployeeProfile(props: IEmployeeProfileProps) {
           <h1 className="form-head-text text-center m-5 text-dark">
             Update Employee Details
           </h1>
+          {/* {error && ( // Render error message if there's an error
+              <div className="alert alert-danger">{error}</div>
+            )} */}
           <div className="container">
           <div className="row d-flex justify-content-center">
             <div className="col-6 center_potion">
+            {error && ( // Render error message if there's an error
+              <div className="alert alert-danger">{error}</div>
+            )}
             <form className="">
             <div className="form-group">
               <label htmlFor="name" className="label" style={{marginLeft: '.5rem'}}>First Name :</label>
