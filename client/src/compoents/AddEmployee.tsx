@@ -1,4 +1,5 @@
 import React from "react";
+import { userSchema } from "../validation/validation";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -30,57 +31,25 @@ export default function App(props: IAppProps) {
 //   const [DesignationError, setDesignationError] = useState("");
 //   const [DOBError, setDOBError] = useState("");
 //   const [LanguageError, setLanguageError] = useState("");
-  
- 
+
 
   function Home() {
    navigate("/"); //function for navigating to home
   }
+
+
   async function save(e: any) {
        e.preventDefault();
-    
-//     let isError = false;
+    let formData={
+      first_name:first_name ,
+      last_name:last_name,
+      email:email,
+      designation:designation
+    }
+    console.log(formData)
 
-// if (first_name.trim() === "") {
-//   setfirstError("Name is required");
-//   isError = true;
-// }
-
-// if (last_name.trim() === "") {
-//   setlastError("Name is required");
-//   isError = true;
-// }
-
-// if (email.trim() === "") {
-//   setEmailError("Email is required");
-//   isError = true;
-
-// } else if (!/\S+@\S+\.\S+/.test(email)) {
-//   setEmailError("Email is invalid");
-//   isError = true;
-// }
-
-// if (Gender.trim() === "") {
-//   setGenderError("Gender is required");
-//   isError = true;
-// }
-
-// if (designation.trim() === "") {
-//   setDesignationError("Designation is required");
-//   isError = true;
-// }
-
-// if (!DoB) {
-//   setDOBError("Please enter a valid date of birth.");
-//   return;
-// }
-
-
-
-// if (!languages) {
-//   setLanguageError(languages ? "" : "enter a place.");
-// }
-
+    const isValid=await userSchema.isValid(formData)
+    console.log(isValid)
     if (
       !email ||
       !first_name ||
@@ -116,6 +85,8 @@ export default function App(props: IAppProps) {
       console.error(error);
     }
   }
+
+
   const getMaxDate = () => {
     const today = new Date();
     today.setFullYear(today.getFullYear() - 15);
