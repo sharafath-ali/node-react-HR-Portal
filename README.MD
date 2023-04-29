@@ -7,26 +7,29 @@ This is a web-based application for managing employees in a company. The applica
 - **Home Page**: Displays the main landing page of the application with a visually appealing image or content to welcome users.
 
   ![Home Page](./assets/HOME%20PAGE.png)
-
+  ![Home Page](./assets/afterserch.png)
 - **Add Employee Page**: Allows users to add new employees to the system. The page includes a form for inputting employee information such as name, contact details, and job details.
 
   ![Add Employee Page](./assets/ADD%20ROUTE.png)
+  
 
 - **Upload Page**: Provides functionality for uploading documents related to employees, such as resumes, contracts, or other relevant files.
 
   ![Upload Page](./assets/UPLOAD.png)
+
 
   
 
 - **Profile View**: Displays the profile details of an employee, including their personal information, job details, and uploaded documents.
 
   ![Profile View](./assets/PROFILE.png)
+  ![Profile View](./assets/profile2.png)
 
 - **Update**: Allows users to edit and update the details of an existing employee, such as their contact information or job details.
 
   ![Update](./assets/UPDATE.png)
   ![Documents](./assets/DOCUMENTS.png)
-
+  ![Profile View](./assets/Delete%20Alert%20box.png)
 ## Technologies Used
 
 - React: A popular JavaScript library for building user interfaces.
